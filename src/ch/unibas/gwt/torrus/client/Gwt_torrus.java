@@ -80,7 +80,7 @@ public class Gwt_torrus implements EntryPoint {
 		comboBoxView.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				int selectedIndex = comboBoxView.getSelectedIndex();
-				if (selectedIndex > 0) {
+				if (selectedIndex > -1) {
 					String v = comboBoxView.getValue(selectedIndex);
 					for (TorrusImage img : images) {
 						img.setView(v);
@@ -90,7 +90,6 @@ public class Gwt_torrus implements EntryPoint {
 			}
 		});
 
-		comboBoxView.addItem("last24h");
 		comboBoxView.addItem("last24h");
 		comboBoxView.addItem("lastweek");
 		comboBoxView.addItem("lastmonth");
@@ -129,7 +128,7 @@ public class Gwt_torrus implements EntryPoint {
 		comboBoxDataset.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				int selectedIndex = comboBoxDataset.getSelectedIndex();
-				if (selectedIndex > 0) {
+				if (selectedIndex > -1) {
 					String ds = comboBoxDataset.getValue(selectedIndex);
 					updateConfig(ds);
 					updateGrid();

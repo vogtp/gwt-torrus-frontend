@@ -18,7 +18,6 @@ public abstract class ConfigHandler {
 
 	public static void setSetAvailableConfigs(ListBox comboBoxDataset) {
 		comboBoxDataset.addItem(DATASET_EXCH);
-		comboBoxDataset.addItem(DATASET_EXCH);
 		comboBoxDataset.addItem(DATASET_ALTIRIS);
 	}
 
