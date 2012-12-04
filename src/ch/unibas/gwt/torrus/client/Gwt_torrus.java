@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ch.unibas.gwt.torrus.client.config.ConfigHandler;
 import ch.unibas.gwt.torrus.client.helper.TorrusUrl;
+import ch.unibas.gwt.torrus.client.view.Devices;
 import ch.unibas.gwt.torrus.client.widget.TorrusImage;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -11,9 +12,11 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -26,6 +29,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Gwt_torrus implements EntryPoint {
 
+	private static final String PAGE_IMAGE_GRID = "PAGE_IMAGE_GRID";
+	private static final String PAGE_SERVERS = "PAGE_SERVERS";
 	ArrayList<TorrusImage> images;
 	private Grid grid;
 	private ArrayList<String> servers;
@@ -69,11 +74,25 @@ public class Gwt_torrus implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		rootPanel = RootPanel.get("nameFieldContainer");
+		if (History.getToken().isEmpty()) {
+			History.newItem(PAGE_IMAGE_GRID);
+		}
+
+		String currentPage = History.getToken();
+		if (PAGE_IMAGE_GRID.equals(currentPage)) {
+			createImageGrid();
+		} else if (PAGE_SERVERS.equals(currentPage)) {
+			rootPanel.clear();
+			rootPanel.add(new Devices());
+		}
+
+	}
+
+	private void createImageGrid() {
 		images = new ArrayList<TorrusImage>();
 		String configName = Window.Location.getParameter("dataset");
 		updateConfig(configName);
-
-		rootPanel = RootPanel.get("nameFieldContainer");
 		updateGrid();
 
 		final ListBox comboBoxView = new ListBox();
@@ -137,6 +156,10 @@ public class Gwt_torrus implements EntryPoint {
 		});
 		rootPanel.add(comboBoxDataset, 332, 0);
 
+		Hyperlink hprlnkNewHyperlink = new Hyperlink("Servers", false,
+				PAGE_SERVERS);
+
+		rootPanel.add(hprlnkNewHyperlink, 403, 8);
 	}
 
 	private void updateConfig(String name) {
