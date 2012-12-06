@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class TorrusConfigParser {
+public class TorrusConfigParser implements ITorrusParser {
 	
 	private static final String NODE_CONFIG = "/etc/torrus/xmlconfig/spectrum_nodes.xml";
 	private String[] nodes;
