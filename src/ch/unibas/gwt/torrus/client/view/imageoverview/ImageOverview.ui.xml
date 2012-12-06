@@ -6,12 +6,12 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:HorizontalPanel>
-			<g:Label text="View" />
 			<g:ListBox name="lbView" ui:field="lbView" />
 			<g:Label text="Zoom" />
 			<g:IntegerBox width="34px" height="16px" ui:field="ibZoom" text="50" />
 			<g:Label text="Dataset" />
 			<g:ListBox ui:field="lbDataset" />
+			<g:Button text="Add Server" ui:field="buAddServer"/>
 		</g:HorizontalPanel>
 		<g:SimplePanel width="552px" height="341px" ui:field="gridPanel"/>
 	</g:HTMLPanel>

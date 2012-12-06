@@ -1,6 +1,7 @@
 package ch.unibas.gwt.torrus.client;
 
 import ch.unibas.gwt.torrus.client.view.imageoverview.ImageOverview;
+import ch.unibas.gwt.torrus.client.view.serverchooser.ServerChooserPopupPanel;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
@@ -24,15 +25,13 @@ public class Gwt_torrus implements EntryPoint {
 
 		RootPanel rootPanel = RootPanel.get("nameFieldContainer");
 		String currentPage = History.getToken();
-		rootPanel.add(new ImageOverview());
-		// rootPanel.add(new Devices());
-		// if (PAGE_IMAGE_GRID.equals(currentPage)) {
-		// // rootPanel.clear();
-		// rootPanel.add(new ImageOverview());
-		// } else if (PAGE_SERVERS.equals(currentPage)) {
-		// rootPanel.clear();
-		// rootPanel.add(new Devices());
-		// }
+		if (PAGE_IMAGE_GRID.equals(currentPage)) {
+			rootPanel.clear();
+			rootPanel.add(new ImageOverview());
+		} else if (PAGE_SERVERS.equals(currentPage)) {
+			rootPanel.clear();
+			rootPanel.add(new ServerChooserPopupPanel());
+		}
 
 	}
 

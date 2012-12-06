@@ -1,11 +1,5 @@
 package ch.unibas.gwt.torrus.client.service;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -29,5 +23,5 @@ public interface TorrusService extends RemoteService {
 		
 	}
 	
-	public String[] getNodes() throws IOException, ParserConfigurationException, SAXException ;
+	public String[] getNodes();
 }

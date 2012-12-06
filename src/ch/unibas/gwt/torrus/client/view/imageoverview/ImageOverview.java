@@ -3,15 +3,19 @@ package ch.unibas.gwt.torrus.client.view.imageoverview;
 import java.util.ArrayList;
 
 import ch.unibas.gwt.torrus.client.config.ConfigHandler;
+import ch.unibas.gwt.torrus.client.view.serverchooser.ServerChooserPopupPanel;
 import ch.unibas.gwt.torrus.client.widget.TorrusImage;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.IntegerBox;
@@ -35,6 +39,7 @@ public class ImageOverview extends Composite {
 	@UiField
 	ListBox lbDataset;
 	@UiField SimplePanel gridPanel;
+	@UiField Button buAddServer;
 
 	interface ImageOverviewUiBinder extends UiBinder<Widget, ImageOverview> {
 	}
@@ -141,5 +146,27 @@ public class ImageOverview extends Composite {
 			lbView.addItem("lastmonth");
 			lbView.addItem("lastyear");
 		}
+	}
+	@UiHandler("buAddServer")
+	void onBuAddServerClick(ClickEvent event) {
+		final ServerChooserPopupPanel serverChooser = new ServerChooserPopupPanel();
+		serverChooser.setPopupPosition(buAddServer.getAbsoluteLeft(),
+				buAddServer.getAbsoluteTop() + buAddServer.getOffsetHeight());
+		ChangeHandler handler = new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				addServer(serverChooser.getSelectedServer());
+				serverChooser.hide();
+			}
+
+		};
+		serverChooser.addChangeHandler(handler);
+		serverChooser.show();
+	}
+
+	private void addServer(String server) {
+		servers.add(server);
+		updateGrid();
 	}
 }

@@ -1,11 +1,5 @@
 package ch.unibas.gwt.torrus.server;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import ch.unibas.gwt.torrus.client.service.TorrusService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -17,7 +11,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class TorrusServiceImpl extends RemoteServiceServlet implements
 		TorrusService {
 
-	private static final String TORRUS_HOME = "/opt/pm/";
 	private ITorrusParser torrusParser;
 	
 	public TorrusServiceImpl() {
@@ -28,8 +21,13 @@ public class TorrusServiceImpl extends RemoteServiceServlet implements
 
 
 	@Override
-	public String[] getNodes() throws IOException, ParserConfigurationException, SAXException  {
-		return torrusParser.getAvailableNodes();
+	public String[] getNodes() {
+		try {
+			return torrusParser.getAvailableNodes();
+		} catch (Exception e) {
+			e.printStackTrace(); // FIXME do proper handling
+			return new String[0];
+		}
 	}
 
 
