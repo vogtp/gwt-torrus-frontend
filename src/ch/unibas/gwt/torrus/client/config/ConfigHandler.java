@@ -1,6 +1,6 @@
 package ch.unibas.gwt.torrus.client.config;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -25,25 +25,25 @@ public abstract class ConfigHandler {
 
 	
 
-	private ArrayList<String> servers = null;
-	private ArrayList<String> values = null;
+	private LinkedList<String> servers = null;
+	private LinkedList<String> values = null;
 
-	public ArrayList<String> getServers() {
+	public LinkedList<String> getServers() {
 		if (servers == null) {
 			servers = buildServerList();
 		}
 		return servers;
 	}
 
-	public abstract ArrayList<String> buildServerList();
+	public abstract LinkedList<String> buildServerList();
 
-	public ArrayList<String> getValues() {
+	public LinkedList<String> getValues() {
 		if (values == null) {
 			values = buildValueList();
 		}
 		return values;
 	}
 
-	public abstract ArrayList<String> buildValueList();
+	public abstract LinkedList<String> buildValueList();
 
 }

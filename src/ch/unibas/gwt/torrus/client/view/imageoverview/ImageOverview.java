@@ -1,6 +1,7 @@
 package ch.unibas.gwt.torrus.client.view.imageoverview;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import ch.unibas.gwt.torrus.client.config.ConfigHandler;
 import ch.unibas.gwt.torrus.client.view.serverchooser.ServerChooserPopupPanel;
@@ -26,8 +27,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class ImageOverview extends Composite {
 
 	ArrayList<TorrusImage> images;
-	private ArrayList<String> servers;
-	private ArrayList<String> values;
+	private LinkedList<String> servers;
+	private LinkedList<String> values;
 	Grid gridImages;
 
 	private static ImageOverviewUiBinder uiBinder = GWT
@@ -166,7 +167,7 @@ public class ImageOverview extends Composite {
 	}
 
 	private void addServer(String server) {
-		servers.add(server);
+		servers.add(0, server);
 		updateGrid();
 	}
 }

@@ -1,6 +1,6 @@
 package ch.unibas.gwt.torrus.client.view.imageoverview;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import ch.unibas.gwt.torrus.client.helper.TorrusUrl;
 
@@ -14,14 +14,14 @@ public class TitleWidget extends VerticalPanel {
 
 
 	public TitleWidget(ImageOverview parent, final String title,
-			final ArrayList<String> list,
+			final LinkedList<String> list,
 				String removeKey) {
 		this(parent, title, null, list, removeKey);
 		}
 
 	public TitleWidget(final ImageOverview parent, final String title,
 			String link,
-				final ArrayList<String> list, final String removeKey) {
+ final LinkedList<String> list, final String removeKey) {
 			super();
 			Anchor remove = new Anchor("Remove");
 			remove.addClickHandler(new ClickHandler() {
