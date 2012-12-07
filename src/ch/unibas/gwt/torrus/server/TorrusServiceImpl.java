@@ -1,5 +1,7 @@
 package ch.unibas.gwt.torrus.server;
 
+import java.io.File;
+
 import ch.unibas.gwt.torrus.client.service.TorrusService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -11,14 +13,21 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class TorrusServiceImpl extends RemoteServiceServlet implements
 		TorrusService {
 
+	private static final String TORRUS_HOME = "/opt/pm/";
+	private static final String TORRUS_HOME_WINDOWS = "c:/torrus/pm/";
+
 	private ITorrusParser torrusParser;
-	
+
 	public TorrusServiceImpl() {
 		super();
-		// torrusParser = new TorrusConfigParser(TORRUS_HOME);
-		torrusParser = new TorrusDummyParser();
+		if (new File(TORRUS_HOME).exists()) {
+			torrusParser = new TorrusConfigParser(TORRUS_HOME);
+		} else if (new File(TORRUS_HOME_WINDOWS).exists()) {
+			torrusParser = new TorrusConfigParser(TORRUS_HOME_WINDOWS);
+		} else {
+			torrusParser = new TorrusDummyParser();
+		}
 	}
-
 
 	@Override
 	public String[] getNodes() {
@@ -29,6 +38,5 @@ public class TorrusServiceImpl extends RemoteServiceServlet implements
 			return new String[0];
 		}
 	}
-
 
 }
