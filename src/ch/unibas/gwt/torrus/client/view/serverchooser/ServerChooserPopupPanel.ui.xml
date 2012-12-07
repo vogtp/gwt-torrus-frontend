@@ -8,7 +8,7 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:CaptionPanel captionText="Choose a server to add">
-			<g:ListBox visibleItemCount="5" width="5cm" height="3cm" ui:field="lbServers"/>
+			<g:ListBox visibleItemCount="25"  ui:field="lbServers"/>
 		</g:CaptionPanel>
 		
 	</g:HTMLPanel>
