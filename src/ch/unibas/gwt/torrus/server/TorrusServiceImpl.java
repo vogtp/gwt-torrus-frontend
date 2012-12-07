@@ -30,12 +30,11 @@ public class TorrusServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String[] getNodes() {
+	public String[] getNodes() throws Exception {
 		try {
 			return torrusParser.getAvailableNodes();
 		} catch (Exception e) {
-			e.printStackTrace(); // FIXME do proper handling
-			return new String[0];
+			throw new Exception(e);
 		}
 	}
 

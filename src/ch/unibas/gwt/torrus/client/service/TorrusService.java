@@ -23,5 +23,5 @@ public interface TorrusService extends RemoteService {
 		
 	}
 	
-	public String[] getNodes();
+	public String[] getNodes() throws Exception;
 }
