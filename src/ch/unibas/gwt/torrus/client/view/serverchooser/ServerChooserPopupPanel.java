@@ -16,6 +16,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -56,6 +57,7 @@ public class ServerChooserPopupPanel extends PopupPanel implements
 
 				@Override
 				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
 				}
 			};
 			TorrusService.Util.getInstance().getNodes(getNodesCallback);
