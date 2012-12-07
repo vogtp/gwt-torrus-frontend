@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.unibas.gwt.torrus.server.TorrusConfigParser;
+import ch.unibas.gwt.torrus.server.parser.TorrusConfigParser;
 
 public class TorrusParserTest {
 

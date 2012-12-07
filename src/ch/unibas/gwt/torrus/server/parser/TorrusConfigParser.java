@@ -1,4 +1,4 @@
-package ch.unibas.gwt.torrus.server;
+package ch.unibas.gwt.torrus.server.parser;
 
 import java.io.File;
 import java.io.IOException;
