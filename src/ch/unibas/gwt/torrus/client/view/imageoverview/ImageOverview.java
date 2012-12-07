@@ -15,7 +15,7 @@ import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
@@ -41,6 +41,7 @@ public class ImageOverview extends Composite {
 	ListBox lbDataset;
 	@UiField SimplePanel gridPanel;
 	@UiField Button buAddServer;
+	private String configName;
 
 	interface ImageOverviewUiBinder extends UiBinder<Widget, ImageOverview> {
 	}
@@ -48,15 +49,10 @@ public class ImageOverview extends Composite {
 	public ImageOverview() {
 		initWidget(uiBinder.createAndBindUi(this));
 		images = new ArrayList<TorrusImage>();
-		String configName = Window.Location.getParameter("dataset");
-		updateConfig(configName);
-		// lbView.addItem("last24h");
-		// lbView.addItem("lastweek");
-		// lbView.addItem("lastmonth");
-		// lbView.addItem("lastyear");
-		ibZoom.setValue(50);
-		ConfigHandler.setSetAvailableConfigs(lbDataset);
-		// updateGrid();
+		configName = History.getToken();
+
+		updateConfig();
+
 	}
 
 	@UiHandler("lbView")
@@ -84,14 +80,15 @@ public class ImageOverview extends Composite {
 	void onLbDatasetChange(ChangeEvent event) {
 		int selectedIndex = lbDataset.getSelectedIndex();
 		if (selectedIndex > -1) {
-			String ds = lbDataset.getValue(selectedIndex);
-			updateConfig(ds);
+			configName = lbDataset.getValue(selectedIndex);
+			updateConfig();
+			History.newItem(configName);
 			updateGrid();
 		}
 	}
 
-	private void updateConfig(String name) {
-		ConfigHandler config = ConfigHandler.getConfig(name);
+	private void updateConfig() {
+		ConfigHandler config = ConfigHandler.getConfig(configName);
 		servers = config.getServers();
 		values = config.getValues();
 	}
@@ -169,5 +166,15 @@ public class ImageOverview extends Composite {
 	private void addServer(String server) {
 		servers.add(0, server);
 		updateGrid();
+	}
+	@UiHandler("lbDataset")
+	void onLbDatasetAttachOrDetach(AttachEvent event) {
+		ConfigHandler.setSetAvailableConfigs(lbDataset);
+
+		for (int i = 0; i < lbDataset.getItemCount(); i++) {
+			if (configName.equals(lbDataset.getValue(i))) {
+				lbDataset.setItemSelected(i, true);
+			}
+		}
 	}
 }
