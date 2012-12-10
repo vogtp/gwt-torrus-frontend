@@ -1,24 +1,12 @@
 package ch.unibas.gwt.torrus.server;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import ch.unibas.gwt.torrus.client.service.TorrusService;
+import ch.unibas.gwt.torrus.server.parser.ITorrusParser;
+import ch.unibas.gwt.torrus.server.parser.TorrusConfigParser;
+import ch.unibas.gwt.torrus.server.parser.TorrusDummyParser;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -29,18 +17,28 @@ public class TorrusServiceImpl extends RemoteServiceServlet implements
 		TorrusService {
 
 	private static final String TORRUS_HOME = "/opt/pm/";
-	private TorrusConfigParser torrusParser;
-	
+	private static final String TORRUS_HOME_WINDOWS = "c:/torrus/pm/";
+
+	private ITorrusParser torrusParser;
+
 	public TorrusServiceImpl() {
 		super();
-		torrusParser = new TorrusConfigParser(TORRUS_HOME);
+		if (new File(TORRUS_HOME).exists()) {
+			torrusParser = new TorrusConfigParser(TORRUS_HOME);
+		} else if (new File(TORRUS_HOME_WINDOWS).exists()) {
+			torrusParser = new TorrusConfigParser(TORRUS_HOME_WINDOWS);
+		} else {
+			torrusParser = new TorrusDummyParser();
+		}
 	}
-
 
 	@Override
-	public String[] getNodes() throws IOException, ParserConfigurationException, SAXException  {
-		return torrusParser.getAvailableNodes();
+	public String[] getNodes() throws Exception {
+		try {
+			return torrusParser.getAvailableNodes();
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
 	}
-
 
 }
